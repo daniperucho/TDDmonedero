@@ -8,7 +8,7 @@ public class Cuenta {
         return saldo;
     }
     public boolean esCantidadValida(double cantidad){
-        if(cantidad <0 || cantidad >6000) {
+        if(cantidad <0 || cantidad >7000) {
             return false;
         }
         else {
@@ -22,6 +22,15 @@ public class Cuenta {
         else {
             saldo += cantidad;
         }
+    }
+
+    private boolean esRetiradaValida(double cantidad){
+        return cantidad >= 0 && cantidad <= saldo && cantidad <= 6000;
+    }
+
+    public void retirar(double cantidad) {
+        if (!esRetiradaValida(cantidad)) return;
+        saldo -= cantidad;
     }
 
 }
