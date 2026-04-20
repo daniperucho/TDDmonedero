@@ -82,16 +82,69 @@ class tddSampleTest {
     @Test
     void testRetiradaMaxima6000() {
         Cuenta c = new Cuenta();
-        c.ingresar(7000);
+        c.ingresar(4000);
+        c.ingresar(3000);
         c.retirar(6000);
         assertEquals(1000, c.getSaldo());
     }
     @Test
     void testRetiradaSuperiorA6000NoEsValida() {
         Cuenta c = new Cuenta();
-        c.ingresar(7000);
+        c.ingresar(4000);
+        c.ingresar(3000);
         c.retirar(6000.01);
         assertEquals(7000, c.getSaldo());
     }
+    @Test
+    void testTransferenciaCorrecta() {
+        Cuenta origen = new Cuenta();
+        Cuenta destino = new Cuenta();
 
+        origen.ingresar(500);
+        destino.ingresar(50);
+
+        origen.transferir(destino, 100);
+
+        assertEquals(400, origen.getSaldo());
+        assertEquals(150, destino.getSaldo());
+    }
+    @Test
+    void testNoSePuedeTransferirCantidadNegativa() {
+        Cuenta origen = new Cuenta();
+        Cuenta destino = new Cuenta();
+
+        origen.ingresar(500);
+        destino.ingresar(50);
+
+        origen.transferir(destino, -100);
+
+        assertEquals(500, origen.getSaldo());
+        assertEquals(50, destino.getSaldo());
+    }
+    @Test
+    void testTransferenciaMaxima3000(){
+        Cuenta origen = new Cuenta();
+        Cuenta destino = new Cuenta();
+
+        origen.ingresar(3500);
+        destino.ingresar(50);
+
+        origen.transferir(destino, 3000);
+
+        assertEquals(500, origen.getSaldo());
+        assertEquals(3050, destino.getSaldo());
+    }
+    @Test
+    void testTransferenciaSuperiorA3000NoEsValida(){
+        Cuenta origen = new Cuenta();
+        Cuenta destino = new Cuenta();
+
+        origen.ingresar(3500);
+        destino.ingresar(50);
+
+        origen.transferir(destino, 3000.01);
+
+        assertEquals(3500, origen.getSaldo());
+        assertEquals(50, destino.getSaldo());
+    }
 }

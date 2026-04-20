@@ -8,10 +8,9 @@ public class Cuenta {
         return saldo;
     }
     public boolean esCantidadValida(double cantidad){
-        if(cantidad <0 || cantidad >7000) {
+        if (cantidad < 0 || cantidad > 6000){
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }
@@ -25,7 +24,15 @@ public class Cuenta {
     }
 
     private boolean esRetiradaValida(double cantidad){
-        return cantidad >= 0 && cantidad <= saldo && cantidad <= 6000;
+        if (cantidad <= 0){
+            return false;
+        } else if (cantidad >= saldo) {
+            return false;
+        } else if (cantidad > 6000){
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public void retirar(double cantidad) {
@@ -33,4 +40,19 @@ public class Cuenta {
         saldo -= cantidad;
     }
 
+    private boolean esTransferenciaValida(double cantidad){
+        if (cantidad < 0){
+            return false;
+        } else if (cantidad > 3000){
+            return false;
+        } else{
+            return true;
+        }
+    }
+
+    public void transferir(Cuenta destino, double cantidad) {
+        if (!esTransferenciaValida(cantidad)) return;
+        this.saldo -=cantidad;
+        destino.saldo += cantidad;
+    }
 }
